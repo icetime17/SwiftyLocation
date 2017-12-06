@@ -6,6 +6,7 @@ Pod::Spec.new do |s|
 
   s.description  = <<-DESC
                     ***Useful tool for CoreLocation*** to boost your productivity.
+                    Swift 3.0.
                    DESC
 
   s.homepage     = "https://github.com/icetime17/SwiftyLocation"

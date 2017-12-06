@@ -12,65 +12,65 @@ import CoreLocation
 
 // MARK: - CSLocation
 
-struct CSLocation {
-    var location: CLLocation!
-    var placmark: CLPlacemark!
+public struct CSLocation {
+    public var location: CLLocation!
+    public var placmark: CLPlacemark!
     
-    var region: CLRegion? {
+    public var region: CLRegion? {
         return placmark.region
     }
-    var timeZone: TimeZone? {
+    public var timeZone: TimeZone? {
         return placmark.timeZone
     }
-    var ocean: String? {
+    public var ocean: String? {
         return placmark.ocean
     }
-    var country: String? {
+    public var country: String? {
         return placmark.country
     }
-    var administrativeArea: String? {
+    public var administrativeArea: String? {
         return placmark.administrativeArea
     }
-    var subAdministrativeArea: String? {
+    public var subAdministrativeArea: String? {
         return placmark.subAdministrativeArea
     }
-    var locality: String? {
+    public var locality: String? {
         return placmark.locality
     }
-    var subLocality: String? {
+    public var subLocality: String? {
         return placmark.subLocality
     }
-    var name: String? {
+    public var name: String? {
         return placmark.name
     }
-    var thoroughfare: String? {
+    public var thoroughfare: String? {
         return placmark.thoroughfare
     }
-    var subThoroughfare: String? {
+    public var subThoroughfare: String? {
         return placmark.subThoroughfare
     }
-    var postalCode: String? {
+    public var postalCode: String? {
         return placmark.postalCode
     }
-    var isoCountryCode: String? {
+    public var isoCountryCode: String? {
         return placmark.isoCountryCode
     }
-    var inlandWater: String? {
+    public var inlandWater: String? {
         return placmark.inlandWater
     }
-    var areasOfInterest: [String]? {
+    public var areasOfInterest: [String]? {
         return placmark.areasOfInterest
     }
-    var areaOfInterest: String? {
+    public var areaOfInterest: String? {
         return placmark.areasOfInterest?.first
     }
     
-    var province: String? { return administrativeArea }
-    var city: String? { return locality }
-    var district: String? { return subLocality }
-    var street: String? { return thoroughfare }
-    var number: String? { return subThoroughfare }
-    var desc: String? {
+    public var province: String? { return administrativeArea }
+    public var city: String? { return locality }
+    public var district: String? { return subLocality }
+    public var street: String? { return thoroughfare }
+    public var number: String? { return subThoroughfare }
+    public var desc: String? {
         if areaOfInterest?.isEmpty != nil {
             return areaOfInterest
         } else if name?.isEmpty != nil {
@@ -83,18 +83,18 @@ struct CSLocation {
 
 // MARK: - SwiftyLocationDelegate
 
-protocol SwiftyLocationDelegate {
+public protocol SwiftyLocationDelegate {
     func SwiftyLocationDidUpdateLocation(_ csLocation: CSLocation)
 }
 
 // MARK: - SwiftyLocation
 
-let kNotificationSwiftyLocationDidUpdated = "kNotificationSwiftyLocationDidUpdated"
+public let kNotificationSwiftyLocationDidUpdated = "kNotificationSwiftyLocationDidUpdated"
 
-class SwiftyLocation: NSObject {
+public class SwiftyLocation: NSObject {
     
-    var delegate: SwiftyLocationDelegate?
-    var currentCsLocation: CSLocation?
+    public var delegate: SwiftyLocationDelegate?
+    public var currentCsLocation: CSLocation?
     
     fileprivate var appLanguages: Any?
     
@@ -102,7 +102,7 @@ class SwiftyLocation: NSObject {
     fileprivate var geoCoder: CLGeocoder!
     
     private static let sharedInstance = SwiftyLocation()
-    class var shared: SwiftyLocation {
+    public class var shared: SwiftyLocation {
         if sharedInstance.locationManager == nil {
             sharedInstance.initLocationManager()
             sharedInstance.geoCoder = CLGeocoder()
@@ -112,7 +112,7 @@ class SwiftyLocation: NSObject {
     
 }
 
-extension SwiftyLocation {
+public extension SwiftyLocation {
     fileprivate func initLocationManager() {
         if CLLocationManager.locationServicesEnabled() {
             // (Configuration of your location manager object must always occur on a thread with an active run loop,
@@ -132,13 +132,13 @@ extension SwiftyLocation {
         }
     }
     
-    func startLocation() {
+    public func startLocation() {
         if locationManager != nil {
             locationManager.startUpdatingLocation()
         }
     }
     
-    func stopLocation() {
+    public func stopLocation() {
         if locationManager != nil {
             locationManager.stopUpdatingLocation()
         }
@@ -176,11 +176,11 @@ extension SwiftyLocation {
 // MARK: - CLLocationManagerDelegate
 
 extension SwiftyLocation: CLLocationManagerDelegate {
-    internal func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+    public func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         manager.startUpdatingLocation()
     }
     
-    internal func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+    public func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         guard let location = locations.last else { return }
         
         parseSwiftyLocation(location) { (csLocation) in
