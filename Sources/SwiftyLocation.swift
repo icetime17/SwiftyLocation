@@ -101,13 +101,14 @@ public class SwiftyLocation: NSObject {
     fileprivate var locationManager: CLLocationManager!
     fileprivate var geoCoder: CLGeocoder!
     
-    private static let sharedInstance = SwiftyLocation()
-    public class var shared: SwiftyLocation {
-        if sharedInstance.locationManager == nil {
-            sharedInstance.initLocationManager()
-            sharedInstance.geoCoder = CLGeocoder()
+    static let shared = SwiftyLocation()
+    override private init() {
+        super.init()
+        
+        if self.locationManager == nil {
+            self.initLocationManager()
+            self.geoCoder = CLGeocoder()
         }
-        return sharedInstance
     }
     
 }
